@@ -1,0 +1,3619 @@
+swagger: '2.0'
+info:
+  title:          Management V1 API
+  description:    This is the interface used to manage configuration data that governs APIs.
+  contact:
+    name:           Prizem Support
+    url:            http://www.prizem.io/support
+    email:          support@prizem.io
+  license:
+    name:           Apache 2.0
+    url:            http://www.apache.org/licenses/LICENSE-2.0.html
+  version:        1.0.0
+host:           localhost
+basePath:       /management/v1
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  #CONSUMERS
+  /consumers:
+    get:
+      tags:
+        - consumers
+      summary:        Query consumers
+      description:    TODO
+      operationId:    queryConsumers
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          uniqueItems:        true
+          description:        The consumer identifier filter
+        - name:               name
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The consumer name filter
+        - name:               description
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The consumer description filter
+        - name:               applicationUrl
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The consumer URL filter
+        - name:               applicationImageUrl
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The consumer image/logo URL filter
+        - name:               companyName
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The company filter
+        - name:               companyUrl
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The company URL filter
+        - name:               companyImageUrl
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The company image URL filter
+        - name:               callbackUri
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The callback URIs
+        - name:               planId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The plan identifier
+        - name:               externalId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The external identifier
+      responses: 
+        200: 
+          description:    The paginated list of consumers
+          schema:
+            $ref: '#/definitions/ConsumerList'
+    post: 
+      tags: 
+        - consumers
+      summary:        Create a new consumer
+      description:    TODO
+      operationId:    createConsumer
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/ConsumerUpdate'
+      responses:
+        201:
+          description:    The created consumer
+          schema:
+            $ref: '#/definitions/Consumer'
+  /consumer/{id}:
+    get: 
+      tags: 
+        - consumer
+      summary:        Load a consumer
+      description:    TODO
+      operationId:    loadConsumer
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Consumer'
+    put: 
+      tags: 
+        - consumers
+      summary:        Update an consumer
+      description:    TODO
+      operationId:    updateConsumer
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/ConsumerUpdate'
+      responses: 
+        200: 
+          description:    The updated consumer
+          schema: 
+            $ref: '#/definitions/Consumer'
+    delete: 
+      tags: 
+        - consumers
+      summary:        Delete an consumer
+      description:    TODO
+      operationId:    deleteConsumer
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted consumer
+          schema:
+            $ref: '#/definitions/Consumer'
+  /consumers/{id}/clients:
+    get: 
+      tags: 
+        - consumers
+      summary:        Returns the clients for a consumer
+      description:    TODO
+      operationId:    getConsumerClients
+      x-resource-operation: getClients
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/ClientList'
+  /consumers/{id}/developers:
+    get: 
+      tags: 
+        - consumers
+      summary:        Returns the developers for an application
+      description:    TODO
+      operationId:    getApplicationDevelopers
+      x-resource-operation: getDevelopers
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/DeveloperList'
+  /consumers/{id}/developers/{developerId}:
+    get:
+      tags:
+        - consumers
+      summary:        Returns a single developer associated with the consumer
+      description:    TODO
+      operationId:    getConsumerDeveloper
+      x-resource-operation: getDeveloper
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - in:                 path
+          name:               developerId
+          type:               string
+          required:           true
+          description:        The developer identifier
+      responses: 
+        200:
+          description:    The consumer developer
+          schema: 
+            $ref: '#/definitions/Developer'
+    put:
+      tags:
+        - consumers
+      summary:        Adds a developer to an consumer
+      description:    TODO
+      operationId:    addDeveloperToConsumer
+      x-resource-operation: addDeveloper
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - in:                 path
+          name:               developerId
+          type:               string
+          required:           true
+          description:        The developer identifier
+      responses:
+        200:
+          description:    The consumer developer
+          schema:
+            $ref: '#/definitions/Developer'
+    delete:
+      tags:
+        - consumers
+      summary:        Removes a developer from an consumer
+      description:    TODO
+      operationId:    removeDeveloperFromConsumer
+      x-resource-operation: removeDeveloper
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - in:                 path
+          name:               developerId
+          type:               string
+          required:           true
+          description:        The developer identifier
+      responses:
+        200:
+          description:    The consumer developer
+          schema:
+            $ref: '#/definitions/Result'
+  # CLIENTS
+  /clients:
+    get:
+      tags:
+        - clients
+      summary:        Query clients
+      description:    TODO
+      operationId:    queryClients
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The client identifier filter
+        - name:               consumerId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The client's consumer identifier
+        - name:               label
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The client's label
+        - name:               enabled
+          in:                 query
+          type:               boolean
+          description:        The enabled flag
+        - name:               status
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The client status (awaiting, approved, rejected)
+        - name:               apiKey
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The client's API key
+        - name:               externalId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The client's external identifier
+      responses: 
+        200: 
+          description:    The paginated list of clients
+          schema: 
+            $ref: '#/definitions/ClientList'
+    post: 
+      tags: 
+        - clients
+      summary:        Create a new client
+      description:    TODO
+      operationId:    createClient
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/ClientUpdate'
+      responses:
+        201:
+          description:    The created client
+          schema: 
+            $ref: '#/definitions/Client'
+  /clients/{id}:
+    get: 
+      tags: 
+        - clients
+      summary:        Load a client
+      description:    TODO
+      operationId:    loadClient
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Client'
+    put: 
+      tags: 
+        - clients
+      summary:        Update a client
+      description:    TODO
+      operationId:    updateClient
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/ClientUpdate'
+      responses: 
+        200: 
+          description:    The updated client
+          schema: 
+            $ref: '#/definitions/Client'
+    delete: 
+      tags: 
+        - clients
+      summary:        Delete a client
+      description:    TODO
+      operationId:    deleteClient
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted client
+          schema:
+            $ref: '#/definitions/Client'
+  # DEVELOPERS
+  /developers:
+    get:
+      tags:
+        - developers
+      summary:        Query developers
+      description:    TODO
+      operationId:    queryDevelopers
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer identifier filter
+        - name:               username
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's username
+        - name:               firstName
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's first name
+        - name:               lastName
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's last name
+        - name:               roles
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's roles (for use on the developer portal)
+        - name:               company
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's company
+        - name:               title
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's title
+        - name:               email
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's email
+        - name:               phone
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's phone
+        - name:               mobile
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's mobile
+        - name:               address1
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's address line 1
+        - name:               address2
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's address line 2
+        - name:               locality
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's locality
+        - name:               region
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's region
+        - name:               postalCode
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's postal code
+        - name:               countryCode
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's country code
+        - name:               registrationIp
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's registration IP address
+        - name:               externalId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The developer's external identifier
+      responses: 
+        200:
+          description:    The paginated list of developers
+          schema: 
+            $ref: '#/definitions/DeveloperList'
+    post:
+      tags:
+        - developers
+      summary:        Create a new developer
+      description:    TODO
+      operationId:    createDeveloper
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/DeveloperUpdate'
+      responses:
+        201:
+          description:    The created developer
+          schema:
+            $ref: '#/definitions/Developer'
+  /developers/{id}:
+    get: 
+      tags: 
+        - developers
+      summary:        Load a developer
+      description:    TODO
+      operationId:    loadDeveloper
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200:
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Developer'
+    put:
+      tags: 
+        - developers
+      summary:        Update a developer
+      description:    TODO
+      operationId:    updateDeveloper
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/DeveloperUpdate'
+      responses:
+        200:
+          description:    The updated developer
+          schema: 
+            $ref: '#/definitions/Developer'
+    delete:
+      tags: 
+        - developers
+      summary:        Delete a developer
+      description:    TODO
+      operationId:    deleteDeveloper
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted developer
+          schema:
+            $ref: '#/definitions/Developer'
+  /developers/{id}/password:
+    put:
+      tags:
+        - developers
+      summary:        Resets a developer's password
+      description:    TODO
+      operationId:    setDeveloperPassword
+      x-resource-operation: setPassword
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/SetPassword'
+      responses:
+        200:
+          description:    The authenticated developer
+          schema:
+            $ref: '#/definitions/Result'
+  /developers/{id}/consumers:
+    get:
+      tags:
+        - developers
+      summary:        Returns the consumers the developer is associated with
+      description:    TODO
+      operationId:    getDeveloperConsumers
+      x-resource-operation: getConsumers
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200:
+          description:    The paginated list of developer consumers
+          schema: 
+            $ref: '#/definitions/ConsumerList'
+  /developers/{id}/consumers/{consumerId}:
+    get:
+      tags:
+        - developers
+      summary:        Returns a single consumer the developer is associated with
+      description:    TODO
+      operationId:    getDeveloperConsumer
+      x-resource-operation: getConsumer
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - in:                 path
+          name:               consumerId
+          type:               string
+          required:           true
+          description:        The consumer identifier
+      responses: 
+        200:
+          description:    The developer consumer
+          schema: 
+            $ref: '#/definitions/Consumer'
+    put:
+      tags:
+        - developers
+      summary:        Adds an consumer to a developer
+      description:    TODO
+      operationId:    addConsumerToDeveloper
+      x-resource-operation: addConsumer
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - in:                 path
+          name:               consumerId
+          type:               string
+          required:           true
+          description:        The consumer identifier
+      responses:
+        200:
+          description:    The developer consumer
+          schema:
+            $ref: '#/definitions/Consumer'
+    delete:
+      tags:
+        - developers
+      summary:        Removes a consumer from a developer
+      description:    TODO
+      operationId:    removeConsumerFromDeveloper
+      x-resource-operation: removeConsumer
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - in:                 path
+          name:               consumerId
+          type:               string
+          required:           true
+          description:        The consumer identifier
+      responses:
+        200:
+          description:    The authenticated developer
+          schema:
+            $ref: '#/definitions/Result'
+  /developers/authenticate:
+    post:
+      tags: 
+        - developers
+      summary:        Authenticate a developer
+      description:    TODO
+      operationId:    authenticateDeveloper
+      x-resource-operation: authenticate
+      parameters:
+        - in:                 body
+          name:               body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/Authentication'
+      responses:
+        200:
+          description:    The authenticated developer
+          schema:
+            $ref: '#/definitions/Developer'
+  # LOG ENTRIES
+  /logEntries:
+    get:
+      tags:
+        - logEntries
+      summary:        Query log entries
+      description:    TODO
+      operationId:    queryLogEntries
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The log entry identifier filter
+        - name:               level
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The log entry level filter
+        - name:               message
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The log entry message filter
+      responses:
+        200:
+          description:    The paginated list of logEntries
+          schema:
+            $ref: '#/definitions/LogEntryList'
+    post:
+      tags: 
+        - logEntries
+      summary:        Create a new log entry
+      description:    TODO
+      operationId:    createLogEntry
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/LogEntryUpdate'
+      responses:
+        201:
+          description:    The created logEntry
+          schema: 
+            $ref: '#/definitions/LogEntry'
+  /logEntries/{id}:
+    get: 
+      tags: 
+        - logEntries
+      summary:        Load a log entry
+      description:    TODO
+      operationId:    loadLogEntry
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/LogEntry'
+    put: 
+      tags: 
+        - logEntries
+      summary:        Update a log entry
+      description:    TODO
+      operationId:    updateLogEntry
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/LogEntryUpdate'
+      responses: 
+        200: 
+          description:    The updated logEntry
+          schema: 
+            $ref: '#/definitions/LogEntry'
+    delete: 
+      tags: 
+      - logEntries
+      summary:        Delete a log entry
+      description:    TODO
+      operationId:    deleteLogEntry
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted logEntry
+          schema:
+            $ref: '#/definitions/LogEntry'
+  # MESSAGES
+  /messages:
+    get:
+      tags:
+        - messages
+      summary:        Query messages
+      description:    TODO
+      operationId:    queryMessages
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The message identifier filter
+        - name:               parentId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The message's parent identifier filder
+        - name:               key
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The message's key filter
+      responses: 
+        200: 
+          description:    The paginated list of messages
+          schema: 
+            $ref: '#/definitions/MessageList'
+    post: 
+      tags: 
+      - messages
+      summary:        Create a new message
+      description:    TODO
+      operationId:    createMessage
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/MessageUpdate'
+      responses:
+        201:
+          description:    The created message
+          schema: 
+            $ref: '#/definitions/Message'
+  /messages/{id}:
+    get: 
+      tags: 
+        - messages
+      summary:        Load a message
+      description:    TODO
+      operationId:    loadMessage
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Message'
+    put: 
+      tags: 
+        - messages
+      summary:        Update a message
+      description:    TODO
+      operationId:    updateMessage
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/MessageUpdate'
+      responses: 
+        200: 
+          description:    The updated message
+          schema: 
+            $ref: '#/definitions/Message'
+    delete: 
+      tags: 
+        - messages
+      summary:        Delete a message
+      description:    TODO
+      operationId:    deleteMessage
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted message
+          schema:
+            $ref: '#/definitions/Message'
+ # PERMISSIONS
+  /permissions:
+    get:
+      tags:
+        - permissions
+      summary:        Query permissions
+      description:    TODO
+      operationId:    queryPermissions
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The permission identifier filter
+        - name:               name
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The permission's name filter
+        - name:               type
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The permission's type filter
+        - name:               description
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The permission's description filter
+        - name:               scope
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The permission's scope filter
+        - name:               messageId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The permission's message identifier filter
+        - name:               flags
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The permission's flag filter
+      responses: 
+        200: 
+          description:    The paginated list of permissions
+          schema: 
+            $ref: '#/definitions/PermissionList'
+    post: 
+      tags: 
+        - permissions
+      summary:        Create a new permission
+      description:    TODO
+      operationId:    createPermission
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/PermissionUpdate'
+      responses:
+        201:
+          description:    The created permission
+          schema: 
+            $ref: '#/definitions/Permission'
+  /permissions/{id}:
+    get: 
+      tags: 
+        - permissions
+      summary:        Load a permission
+      description:    TODO
+      operationId:    loadPermission
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Permission'
+    put: 
+      tags: 
+        - permissions
+      summary:        Update a permission
+      description:    TODO
+      operationId:    updatePermission
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/PermissionUpdate'
+      responses: 
+        200: 
+          description:    The updated permission
+          schema: 
+            $ref: '#/definitions/Permission'
+    delete: 
+      tags: 
+        - permissions
+      summary:        Delete a permission
+      description:    TODO
+      operationId:    deletePermission
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted permission
+          schema:
+            $ref: '#/definitions/Permission'
+  # PLANS
+  /plans:
+    get:
+      tags:
+        - plans
+      summary:        Query plans
+      description:    TODO
+      operationId:    queryPlans
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The plan identifier filter
+        - name:               name
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The plan's name filter
+        - name:               priceAmount
+          in:                 query
+          type:               array
+          items:
+            type:               number
+            format:             float
+          collectionFormat:   pipes
+          description:        The plan's price amount filter
+        - name:               priceCurrency
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The plan's price currency filter
+      responses: 
+        200: 
+          description:    The paginated list of plans
+          schema: 
+            $ref: '#/definitions/PlanList'
+    post: 
+      tags: 
+        - plans
+      summary:        Create a new plan
+      description:    TODO
+      operationId:    createPlan
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/PlanUpdate'
+      responses:
+        201:
+          description:    The created plan
+          schema: 
+            $ref: '#/definitions/Plan'
+  /plans/{id}:
+    get: 
+      tags: 
+        - plans
+      summary:        Load a plan
+      description:    TODO
+      operationId:    loadPlan
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Plan'
+    put: 
+      tags: 
+        - plans
+      summary:        Update a plan
+      description:    TODO
+      operationId:    updatePlan
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/PlanUpdate'
+      responses: 
+        200: 
+          description:    The updated plan
+          schema: 
+            $ref: '#/definitions/Plan'
+    delete: 
+      tags: 
+        - plans
+      summary:        Delete a plan
+      description:    TODO
+      operationId:    deletePlan
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted plan
+          schema:
+            $ref: '#/definitions/Plan'
+  # PRINCIPAL CLAIMS
+  /principalClaims:
+    get:
+      tags:
+        - principalClaims
+      summary:        Query principal claims
+      description:    TODO
+      operationId:    queryPrincipalClaims
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The principal claims identifier filter
+        - name:               name
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The principal claims's name filter
+        - name:               inherits
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The principal claims' inherited claims filter
+      responses: 
+        200: 
+          description:    The paginated list of principal claims
+          schema: 
+            $ref: '#/definitions/PrincipalClaimsList'
+    post: 
+      tags: 
+        - principalClaims
+      summary:        Create a new principal claims
+      description:    TODO
+      operationId:    createPrincipalClaims
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/PrincipalClaimsUpdate'
+      responses:
+        201:
+          description:    The created prinipal claims
+          schema: 
+            $ref: '#/definitions/PrincipalClaims'
+  /principalClaims/{id}:
+    get: 
+      tags: 
+        - principalClaims
+      summary:        Load a principal claims
+      description:    TODO
+      operationId:    loadPrincipalClaims
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/PrincipalClaims'
+    put: 
+      tags: 
+        - principalClaims
+      summary:        Update a principal claims
+      description:    TODO
+      operationId:    updatePrincipalClaims
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/PrincipalClaimsUpdate'
+      responses: 
+        200: 
+          description:    The updated principal claims
+          schema: 
+            $ref: '#/definitions/PrincipalClaims'
+    delete: 
+      tags: 
+        - principalClaims
+      summary:        Delete a principal claims
+      description:    TODO
+      operationId:    deletePrincipalClaims
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted principal claims
+          schema:
+            $ref: '#/definitions/PrincipalClaims'
+  # PRINCIPAL PROFILES
+  /principalProfiles:
+    get:
+      tags:
+        - principalProfiles
+      summary:        Query principal profile
+      description:    TODO
+      operationId:    queryPrincipalProfile
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The principal profile identifier filter
+        - name:               name
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The principal profile's name filter
+      responses: 
+        200: 
+          description:    The paginated list of principal profile
+          schema: 
+            $ref: '#/definitions/PrincipalProfileList'
+    post: 
+      tags: 
+        - principalProfiles
+      summary:        Create a new principal profile
+      description:    TODO
+      operationId:    createPrincipalProfile
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/PrincipalProfileUpdate'
+      responses:
+        201:
+          description:    The created prinipal profile
+          schema: 
+            $ref: '#/definitions/PrincipalProfile'
+  /principalProfiles/{id}:
+    get: 
+      tags: 
+        - principalProfiles
+      summary:        Load a principal profile
+      description:    TODO
+      operationId:    loadPrincipalProfile
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/PrincipalProfile'
+    put: 
+      tags: 
+      - principalProfiles
+      summary:        Update a principal profile
+      description:    TODO
+      operationId:    updatePrincipalProfile
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/PrincipalProfileUpdate'
+      responses: 
+        200: 
+          description:    The updated principal profile
+          schema: 
+            $ref: '#/definitions/PrincipalProfile'
+    delete: 
+      tags: 
+        - principalProfiles
+      summary:        Delete a principal profile
+      description:    TODO
+      operationId:    deletePrincipalProfile
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted principal profile
+          schema:
+            $ref: '#/definitions/PrincipalProfile'
+  # PROVIDERS
+  /providers:
+    get:
+      tags:
+        - providers
+      summary:        Query providers
+      description:    TODO
+      operationId:    queryProviders
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The provider identifier filter
+        - name:               name
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The provider's name filter
+        - name:               enabled
+          in:                 query
+          type:               boolean
+        - name:               apiKey
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The provider's API key filter
+      responses: 
+        200: 
+          description:    The paginated list of providers
+          schema: 
+            $ref: '#/definitions/ProviderList'
+    post: 
+      tags: 
+        - providers
+      summary:        Create a new provider
+      description:    TODO
+      operationId:    createProvider
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/ProviderUpdate'
+      responses:
+        201:
+          description:    The created provider
+          schema: 
+            $ref: '#/definitions/Provider'
+  /providers/{id}:
+    get: 
+      tags: 
+        - providers
+      summary:        Load a provider
+      description:    TODO
+      operationId:    loadProvider
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Provider'
+    put: 
+      tags: 
+        - providers
+      summary:        Update a provider
+      description:    TODO
+      operationId:    updateProvider
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/ProviderUpdate'
+      responses: 
+        200: 
+          description:    The updated provider
+          schema: 
+            $ref: '#/definitions/Provider'
+    delete: 
+      tags: 
+        - providers
+      summary:        Delete a provider
+      description:    TODO
+      operationId:    deleteProvider
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted provider
+          schema:
+            $ref: '#/definitions/Provider'
+  # ROLES
+  /roles:
+    get:
+      tags:
+        - roles
+      summary:        Query roles
+      description:    TODO
+      operationId:    queryRoles
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The role identifier filter
+        - name:               roleName
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The role's name filter
+        - name:               displayName
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The role's display name filter
+        - name:               description
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The role's description filter
+      responses: 
+        200: 
+          description:    The paginated list of roles
+          schema: 
+            $ref: '#/definitions/RoleList'
+    post: 
+      tags: 
+        - roles
+      summary:        Create a new role
+      description:    TODO
+      operationId:    createRole
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/RoleUpdate'
+      responses:
+        201:
+          description:    The created role
+          schema: 
+            $ref: '#/definitions/Role'
+  /roles/{id}:
+    get: 
+      tags: 
+        - roles
+      summary:        Load a role
+      description:    TODO
+      operationId:    loadRole
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Role'
+    put: 
+      tags: 
+        - roles
+      summary:        Update a role
+      description:    TODO
+      operationId:    updateRole
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/RoleUpdate'
+      responses: 
+        200: 
+          description:    The updated role
+          schema: 
+            $ref: '#/definitions/Role'
+    delete: 
+      tags: 
+        - roles
+      summary:        Delete a role
+      description:    TODO
+      operationId:    deleteRole
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted role
+          schema:
+            $ref: '#/definitions/Role'
+  # SERVICES
+  /services:
+    get:
+      tags:
+        - services
+      summary:        Query services
+      description:    TODO
+      operationId:    queryServices
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The service identifier filter
+        - name:               name
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The service's name filter
+        - name:               type
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The service's display name filter
+        - name:               description
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The service's description filter
+        - name:               accessControl
+          in:                 query
+          type:               boolean
+        - name:               uriPrefix
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The service's URI prefix filter
+        - name:               versionLocation
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The service's URI version location filter
+        - name:               defaultVersion
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The service's default version filter
+        - name:               flags
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The service's flags filter
+      responses: 
+        200: 
+          description:    The paginated list of services
+          schema: 
+            $ref: '#/definitions/ServiceList'
+    post: 
+      tags: 
+        - services
+      summary:        Create a new service
+      description:    TODO
+      operationId:    createService
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/ServiceUpdate'
+      responses:
+        201:
+          description:    The created service
+          schema: 
+            $ref: '#/definitions/Service'
+  /services/{id}:
+    get: 
+      tags: 
+        - services
+      summary:        Load a service
+      description:    TODO
+      operationId:    loadService
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Service'
+    put: 
+      tags: 
+        - services
+      summary:        Update a service
+      description:    TODO
+      operationId:    updateService
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/ServiceUpdate'
+      responses: 
+        200: 
+          description:    The updated service
+          schema: 
+            $ref: '#/definitions/Service'
+    delete: 
+      tags: 
+        - services
+      summary:        Delete a service
+      description:    TODO
+      operationId:    deleteService
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted service
+          schema:
+            $ref: '#/definitions/Service'
+  # TOKENS
+  /tokens:
+    get:
+      tags:
+        - tokens
+      summary:        Query tokens
+      description:    TODO
+      operationId:    queryTokens
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token identifier filter
+        - name:               clientId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's client identifier filter
+        - name:               scheme
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's scheme filter
+        - name:               token
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's value filter
+        - name:               refreshToken
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's refresh token filter
+        - name:               tokenType
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's type filter
+        - name:               grantType
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's grant type filter
+        - name:               lifespan
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's lifespan filter
+        - name:               userCode
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's user code filter
+        - name:               fromToken
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's from token filter
+        - name:               permissionIds
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's permission identifier filter
+        - name:               state
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's state filter
+        - name:               uri
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's URI filter
+        - name:               userId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's user identifier filter
+        - name:               userContext
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's user context filter
+        - name:               externalId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The token's external identifier filter
+      responses: 
+        200: 
+          description:    The paginated list of tokens
+          schema: 
+            $ref: '#/definitions/TokenList'
+    post: 
+      tags: 
+        - tokens
+      summary:        Create a new token
+      description:    TODO
+      operationId:    createToken
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/Token'
+      responses:
+        201:
+          description:    The created token
+          schema: 
+            $ref: '#/definitions/Token'
+  /tokens/{id}:
+    get: 
+      tags: 
+        - tokens
+      summary:        Load a token
+      description:    TODO
+      operationId:    loadToken
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Token'
+    put: 
+      tags: 
+        - tokens
+      summary:        Update a token
+      description:    TODO
+      operationId:    updateToken
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/Token'
+      responses: 
+        200: 
+          description:    The updated token
+          schema: 
+            $ref: '#/definitions/Token'
+    delete: 
+      tags: 
+        - tokens
+      summary:        Delete a token
+      description:    TODO
+      operationId:    deleteToken
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted token
+          schema:
+            $ref: '#/definitions/Token'
+  # USERS
+  /users:
+    get:
+      tags:
+        - users
+      summary:        Query users
+      description:    TODO
+      operationId:    queryUsers
+      x-resource-operation: query
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               id
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The user identifier filter
+        - name:               userName
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The user's username filter
+        - name:               firstName
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The user's first name filter
+        - name:               lastName
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The user's last name filter
+        - name:               administrator
+          in:                 query
+          type:               boolean
+          description:        Flag that denotes the user is a system administrator
+        - name:               externalId
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The user's external identifier filter
+      responses: 
+        200: 
+          description:    The paginated list of users
+          schema: 
+            $ref: '#/definitions/UserList'
+    post: 
+      tags: 
+        - users
+      summary:        Create a new user
+      description:    TODO
+      operationId:    createUser
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/UserUpdate'
+      responses:
+        201:
+          description:    The created user
+          schema: 
+            $ref: '#/definitions/User'
+  /users/{id}:
+    get: 
+      tags: 
+        - users
+      summary:        Load a user
+      description:    TODO
+      operationId:    loadUser
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/User'
+    put: 
+      tags: 
+        - users
+      summary:        Update a user
+      description:    TODO
+      operationId:    updateUser
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/UserUpdate'
+      responses: 
+        200: 
+          description:    The updated user
+          schema: 
+            $ref: '#/definitions/User'
+    delete: 
+      tags: 
+        - users
+      summary:        Delete a user
+      description:    TODO
+      operationId:    deleteUser
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted user
+          schema:
+            $ref: '#/definitions/User'
+  /users/{id}/password:
+    put:
+      tags: 
+        - users
+      summary:        Sets a user's password
+      description:    TODO
+      operationId:    setUserPassword
+      x-resource-operation: setPassword
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/SetPassword'
+      responses:
+        200:
+          description:    The result message
+          schema:
+            $ref: '#/definitions/Result'
+  # PLUGINS
+  /plugins:
+    get: 
+      tags: 
+        - plugins
+      summary:        Returns a list of the registered plugin configurations
+      description:    TODO
+      operationId:    listPlugins
+      parameters:
+        - $ref:               '#/parameters/offset'
+        - $ref:               '#/parameters/limit'
+        - name:               name
+          in:                 query
+          type:               array
+          items:
+            type:               string
+          collectionFormat:   pipes
+          description:        The plugin name filter
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/PluginList'
+    post: 
+      tags: 
+        - plugins
+      summary:        Create a new plugin configuration
+      description:    TODO
+      operationId:    createPlugin
+      x-resource-operation: create
+      parameters:
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema:
+            $ref: '#/definitions/PluginConfig'
+      responses:
+        201:
+          description:    The created plugin configuration
+          schema: 
+            $ref: '#/definitions/Plugin'
+  /plugins/{id}:
+    get: 
+      tags: 
+        - plugins
+      summary:        Load a plugin configuration
+      description:    TODO
+      operationId:    loadPlugin
+      x-resource-operation: load
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Plugin'
+    put: 
+      tags: 
+        - users
+      summary:        Update a plugin configuration
+      description:    TODO
+      operationId:    updatePlugin
+      x-resource-operation: update
+      parameters:
+        - $ref:               '#/parameters/entityId'
+        - name:               body
+          in:                 body
+          description:        TODO
+          required:           true
+          schema: 
+            $ref: '#/definitions/PluginConfig'
+      responses: 
+        200: 
+          description:    The updated plugin configuration
+          schema: 
+            $ref: '#/definitions/Plugin'
+    delete: 
+      tags: 
+        - users
+      summary:        Delete a plugin configuration
+      description:    TODO
+      operationId:    deletePlugin
+      x-resource-operation: delete
+      parameters:
+        - $ref:               '#/parameters/entityId'
+      responses:
+        200:
+          description:    The deleted plugin configuration
+          schema:
+            $ref: '#/definitions/Plugin'
+  # ME
+  /me/permissions:
+    get:
+      tags:
+        - me
+      summary:        Returns the user's permissions for the given environment
+      description:    TODO
+      operationId:    getPermissions
+      responses: 
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/UserPermissions'
+  /summary:
+    get:
+      tags:
+        - environments
+      summary:        Returns the environment summary
+      description:    TODO
+      operationId:    getSummary
+      responses:
+        200: 
+          description:    TODO
+          schema: 
+            $ref: '#/definitions/Summary'
+
+#
+# DEFINITIONS
+#
+definitions:
+
+  Entity:
+    required:
+      - id
+    properties:
+      id:
+        type:           string
+
+  Auditable:
+    required:
+      - createdBy
+      - createdDate
+      - modifiedBy
+      - modifiedDate
+    properties:
+      createdBy:
+        type:           string
+      createdDate:
+        type:           string
+        format:         date-time
+      modifiedBy:
+        type:           string
+      modifiedDate:
+        type:           string
+        format:         date-time
+
+  PaginatedList:
+    required:
+      - offset
+      - limit
+      - count
+      - total
+    properties:
+      offset:
+        type:           integer
+        format:         int32
+      limit:
+        type:           integer
+        format:         int32
+      count:
+        type:           integer
+        format:         int32
+      total:
+        type:           integer
+        format:         int32
+
+  # CONSUMERS
+  ConsumerUpdate:
+    required:
+      - name
+      - applicationUrl
+      - companyName
+      - companyUrl
+      - permissionIds
+      - filters
+      - tags
+      - extended
+    properties:
+      name:
+        type:           string
+        x-storage:      case-insensitive
+      description:
+        type:           string
+      applicationUrl:
+        type:           string
+      applicationImageUrl:
+        type:           string
+      companyName:
+        type:           string
+        x-storage:      case-insensitive
+      companyUrl:
+        type:           string
+      companyImageUrl:
+        type:           string
+      permissionIds:
+        type:           array
+        items:
+          type:         string
+        uniqueItems:    true
+      filters:
+        type:           array
+        items:
+          $ref:           '#/definitions/PluginConfig'
+      tags:
+        type:           array
+        items:
+          type:         string
+        uniqueItems:    true
+      planId:
+        type:           string
+      extended:
+        type:           object
+        additionalProperties:
+          type:         string
+          x-type:       any
+      externalId:
+        type:           string
+
+  Consumer:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/ConsumerUpdate'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - name ASCENDING
+    x-indexes:
+      - name:           consumer-by-name
+        unique:         true
+        fields:
+          - name ASCENDING
+      - name:           consumer-by-externalId
+        unique:         true
+        sparse:         true
+        fields:
+          - externalId ASCENDING
+
+  ConsumerList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+          - items
+        properties:
+          items:
+            type:           array
+            items:
+              $ref:          '#/definitions/Consumer'
+
+  # CLIENTS
+  ClientUpdate:
+    required:
+      - consumerId
+      - label
+      - enabled
+      - apiKey
+      - authenticators
+      - filters
+      - clientPermissionIds
+      - permissionSets
+      - extended
+    properties:
+      consumerId:
+        type:           string
+      label:
+        type:           string
+        x-storage:      case-insensitive
+      enabled:
+        type:           boolean
+      status:
+        type:           string
+      apiKey:
+        type:           string
+        x-storage:      encrypted
+      sharedSecret:
+        type:           string
+        x-storage:      encrypted-with-salt
+      authenticators:
+        type:               object
+        additionalProperties:
+          type:               object
+          additionalProperties:
+            type:           string
+            x-type:         any
+      filters:
+        type:           array
+        items:
+          $ref:           '#/definitions/PluginConfig'
+      clientPermissionIds:
+        type:           array
+        items:
+          type:           string
+        uniqueItems:    true
+      permissionSets:
+        type:               object
+        additionalProperties:
+          $ref:             '#/definitions/PermissionSet'
+      extended:
+        type:           object
+        additionalProperties:
+          type:         string
+          x-type:       any
+      externalId:
+        type:           string
+
+  Client:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/ClientUpdate'
+      - $ref:           '#/definitions/Auditable'
+
+  ClientList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+        - items
+        properties:
+          items:
+            type:           array
+            items:
+              $ref:         '#/definitions/Client'
+
+  PermissionSet:
+    required:
+      - enabled
+      - global
+      - lifespan
+      - refreshable
+      - permissionIds
+      - autoAuthorize
+      - allowWebView
+      - allowPopup
+    properties:
+      enabled:
+        type:           boolean
+      global:
+        type:           boolean
+      expiration:
+        type:           integer
+        format:         int64
+      lifespan:
+        type:           string
+        enum:
+          - finite
+          - session
+      refreshable:
+        type:           boolean
+      permissionIds:
+        type:           array
+        items:
+          type:         string
+        uniqueItems:    true
+      autoAuthorize:
+        type:           boolean
+      allowWebView:
+        type:           boolean
+      allowPopup:
+        type:           boolean
+
+  # DEVELOPERS
+  DeveloperUpdate:
+    required:
+      - username
+      - firstName
+      - lastName
+      - roles
+      - extended
+    properties:
+      username:
+        type:           string
+        x-storage:      case-insensitive
+      firstName:
+        type:           string
+        x-storage:      case-insensitive
+      lastName:
+        type:           string
+        x-storage:      case-insensitive
+      roles:
+        type:           array
+        items:
+          type:         string
+        uniqueItems:    true
+      company:
+        type:           string
+        x-storage:      case-insensitive
+      title:
+        type:           string
+        x-storage:      case-insensitive
+      email:
+        type:           string
+        x-storage:      case-insensitive
+      phone:
+        type:           string
+        x-storage:      case-insensitive
+      mobile:
+        type:           string
+        x-storage:      case-insensitive
+      address1:
+        type:           string
+        x-storage:      case-insensitive
+      address2:
+        type:           string
+        x-storage:      case-insensitive
+      locality:
+        type:           string
+        x-storage:      case-insensitive
+      region:
+        type:           string
+        x-storage:      case-insensitive
+      postalCode:
+        type:           string
+        x-storage:      case-insensitive
+      countryCode:
+        type:           string
+        x-storage:      case-insensitive
+      registrationIp:
+        type:           string
+      extended:
+        type:           object
+        additionalProperties:
+          type:         string
+          x-type:       any
+      externalId:
+        type:           string
+
+  Developer:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/DeveloperUpdate'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - username ASCENDING
+    x-indexes:
+      - name:           developer-by-externalId
+        unique:         true
+        sparse:         true
+        fields:
+          - externalId ASCENDING
+
+  DeveloperList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+        - items
+        properties:
+          items:
+            type:           array
+            items:
+              $ref:         '#/definitions/Developer'
+
+  # ENVIRONMENTS
+  EnvironmentUpdate:
+    required:
+      - name
+      - systemDatabase
+      - analyticsDatabase
+    properties:
+      name:
+        type:           string
+        x-storage:      case-insensitive
+      description:
+        type:           string
+      systemDatabase:
+        type:           string
+      analyticsDatabase:
+        type:           string
+
+  Environment:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/EnvironmentUpdate'
+      - $ref:           '#/definitions/Auditable'
+
+  EnvironmentList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+        - items
+        properties:
+          items:
+            type:           array
+            items:
+              $ref:         '#/definitions/Environment'
+
+  # LOG ENTRIES
+  LogEntryUpdate:
+    required:
+      - level
+      - timestamp
+      - message
+    properties:
+      level:
+        type:           string
+      timestamp:
+        type:           string
+        format:         date-time
+      message:
+        type:           string
+
+  LogEntry:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/LogEntryUpdate'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - timestamp DECENDING
+    x-indexes:
+      - name:           logEntry-by-timestamp
+        fields:
+          - timestamp DECENDING
+      - name:           logEntry-by-level-timestamp
+        fields:
+          - level ASCENDING
+          - timestamp DECENDING
+
+  LogEntryList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+        - items
+        properties:
+          items:
+            type:           array
+            items:
+              $ref:         '#/definitions/LogEntry'
+
+  # MESSAGES
+  MessageUpdate:
+    required:
+      - key
+      - locales
+      - displayOrder
+    properties:
+      parentId:
+        type:           string
+      key:
+        type:           string
+      locales:
+        type:           object
+        additionalProperties:
+          $ref:         '#/definitions/MessageContent'
+      displayOrder:
+        type:           integer
+        format:         int32
+
+  MessageContent:
+    required:
+      - format
+      - content
+    properties:
+      format:
+        type:           string
+      content:
+        type:           string
+
+  Message:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/MessageUpdate'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - key ASCENDING
+    x-indexes:
+      - name:           message-by-parent
+        fields:
+          - parentId ASCENDING
+          - displayOrder ASCENDING
+      - name:           message-by-key
+        unique:         true
+        fields:
+          - key ASCENDING
+
+  MessageList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+        - items
+        properties:
+          items:
+            type:       array
+            items:
+              $ref:     '#/definitions/Message'
+
+  # PERMISSIONS
+  PermissionUpdate:
+    required:
+    - name
+    - type
+    - scope
+    - messageId
+    - claimPath
+    - claimValue
+    - flags
+    properties:
+      name:
+        type:           string
+        x-storage:      case-insensitive
+      description:
+        type:           string
+      type:
+        type:           string
+        enum:
+          - action
+          - entity
+      scope:
+        type:           string
+        enum:
+          - user
+          - consumer
+          - both
+      messageId:
+        type:           string
+      claimPath:
+        type:           array
+        items:
+          type:         string
+      claimValue:
+        type:           string
+        x-type:         any
+      flags:
+        type:           array
+        items:
+          type:         string
+        uniqueItems:    true
+
+  Permission:
+    allOf:
+    - $ref:           '#/definitions/Entity'
+    - $ref:           '#/definitions/PermissionUpdate'
+    - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - name ASCENDING
+    x-indexes:
+      - name:           permission-by-name
+        unique:         true
+        fields:
+          - name ASCENDING
+
+  PermissionList:
+    allOf:
+    - $ref:           '#/definitions/PaginatedList'
+    - type:           object
+      required:
+        - items
+      properties:
+        items:
+          type:           array
+          items:
+            $ref:         '#/definitions/Permission'
+
+  # PLANS
+  PlanUpdate:
+    required:
+      - name
+      - priceAmount
+      - priceCurrency
+      - filters
+      - quotas
+    properties:
+      name:
+        type:           string
+        x-storage:      case-insensitive
+      priceAmount:
+        type:           number
+        format:         float
+      priceCurrency:
+        type:           string
+      filters:
+        type:           array
+        items:
+          $ref:           '#/definitions/PluginConfig'
+      quotas:
+        type:           array
+        items:
+          $ref:         '#/definitions/Quota'
+
+  Quota:
+    required:
+      - requestCount
+      - timeUnit
+    properties:
+      requestCount:
+        type:           integer
+        format:         int32
+      timeUnit:
+        type:           string
+        enum:
+          - minute
+          - hour
+          - day
+          - month
+
+  Plan:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/PlanUpdate'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - name ASCENDING
+    x-indexes:
+      - name:           plan-by-name
+        unique:         true
+        fields:
+          - name ASCENDING
+
+  PlanList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:             object
+        required:
+          - items
+        properties:
+          items:
+            type:           array
+            items:
+              $ref:         '#/definitions/Plan'
+
+  # PRINCIPAL CLAIMS
+  PrincipalClaimsUpdate:
+    required:
+      - profileId
+      - name
+      - inherits
+      - claims
+    properties:
+      profileId:
+        type:           string
+      name:
+        type:           string
+        x-storage:      case-insensitive
+      inherits:
+        type:           array
+        items:
+          type:         string
+        uniqueItems:    true
+      claims:
+        type:           object
+        additionalProperties:
+          type:         array
+          items:
+            type:       string
+            x-type:     any
+          uniqueItems:  true
+
+  PrincipalClaims:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/PrincipalClaimsUpdate'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - name ASCENDING
+    x-indexes:
+      - name:           principalClaims-by-name
+        unique:         true
+        fields:
+          - profileId ASCENDING
+          - name ASCENDING
+
+  PrincipalClaimsList:
+    allOf:
+    - $ref:           '#/definitions/PaginatedList'
+    - type:           object
+      required:
+        - items
+      properties:
+        items:
+          type:           array
+          items:
+            $ref:         '#/definitions/PrincipalClaims'
+
+  # PRINCIPAL PROFILES
+  PrincipalProfileUpdate:
+    required:
+      - name
+    properties:
+      name:
+        type:           string
+
+  PrincipalProfile:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/PrincipalProfileUpdate'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - name ASCENDING
+    x-indexes:
+      - name:           principalProfiles-by-name
+        unique:         true
+        fields:
+          - name ASCENDING
+
+  PrincipalProfileList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+          - items
+        properties:
+          items:
+            type:           array
+            items:
+              $ref:           '#/definitions/PrincipalProfile'
+
+  # INTERNAL ACTOR
+  InternalActor:
+    required:
+      - permissions
+      - accessLevels
+    properties:
+      permissions:
+        type:           array
+        items:
+          type:           string
+        uniqueItems:    true
+      accessLevels:
+        type:           object
+        additionalProperties:
+          type:         string
+
+  # PROVIDERS
+  ProviderUpdate:
+    allOf:
+      - $ref:           '#/definitions/InternalActor'
+      - type:           object
+        required:
+          - name
+          - enabled
+          - behindReverseProxy
+          - extended
+        properties:
+          name:
+            type:           string
+            x-storage:      case-insensitive
+          enabled:
+            type:           boolean
+          behindReverseProxy:
+            type:           boolean
+          extended:
+            type:           object
+            additionalProperties:
+              type:         string
+              x-type:       any
+
+  Provider:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/ProviderUpdate'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - name ASCENDING
+    x-indexes:
+      - name:           provider-by-name
+        unique:         true
+        fields:
+          - name ASCENDING
+
+  ProviderList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+          - items
+        properties:
+          items:
+            type:       array
+            items:
+              $ref:     '#/definitions/Provider'
+
+  # ROLES
+  RoleUpdate:
+    allOf:
+      - $ref:           '#/definitions/InternalActor'
+      - type:           object
+        required:
+          - name
+          - displayName
+        properties:
+          name:
+            type:           string
+            x-storage:      case-insensitive
+          displayName:
+            type:           string
+            x-storage:      case-insensitive
+          description:
+            type:           string
+
+  Role:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/RoleUpdate'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - name ASCENDING
+    x-indexes:
+      - name:           role-by-name
+        unique:         true
+        fields:
+          - name ASCENDING
+
+  RoleList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+        - items
+        properties:
+          items:
+            type:         array
+            items:
+              $ref:     '#/definitions/Role'
+
+  # SERVICES
+  ServiceUpdate:
+    required:
+      - name
+      - hostnames
+      - defaultVersion
+      - requestWeights
+      - authenticationType
+      - globalClaims
+      - accessControlEnabled
+      - operations
+      - filters
+      - tags
+      - upstream
+      - configuration
+      - extended
+    properties:
+      name:
+        type:           string
+        x-storage:      case-insensitive
+      type:
+        type:           string
+      description:
+        type:           string
+      hostnames:
+        type:           array
+        items:
+          type:         string
+        uniqueItems:    true
+      uriPrefix:
+        type:           string
+      versionLocation:
+        type:           string
+      defaultVersion:
+        type:           string
+      scheme:
+        type:           string
+      contextRoot:
+        type:           string
+      requestWeights:
+        type:           object
+        additionalProperties:
+          type:         integer
+          format:       int32
+      authenticationType:
+        type:           string
+        enum:
+          - none
+          - two-legged
+          - three-legged
+        default:        none
+      globalClaims:
+        type:           array
+        items:
+          $ref:           '#/definitions/ClaimEntry'
+        uniqueItems:    true
+      accessControlEnabled:
+        type:           boolean
+      operations:
+        type:           array
+        items:
+          $ref:         '#/definitions/Operation'
+      filters:
+        type:           array
+        items:
+          $ref:           '#/definitions/PluginConfig'
+      tags:
+        type:           array
+        items:
+          type:         string
+        uniqueItems:    true
+      upstream:
+        $ref:           '#/definitions/PluginConfig'
+      extended:
+        type:           object
+        additionalProperties:
+          type:         string
+          x-type:       any
+
+  Upstream:
+    required:
+      - type
+      - versions
+    properties:
+      type:
+        type:           string
+      versions:
+        type:           object
+        additionalProperties:
+          type:         object
+          additionalProperties:
+            type:         string
+            x-type:       any
+
+  Operation:
+    required:
+      - name
+      - method
+      - uriPattern
+      - permissionIds
+      - claims
+      - filters
+    properties:
+      name:
+        type:           string
+      method:
+        type:           string
+        enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          - HEAD
+          - OPTIONS
+      uriPattern:
+        type:           string
+      permissionIds:
+        type:           array
+        items:
+          type:           string
+        uniqueItems:    true
+      claims:
+        type:           array
+        items:
+          $ref:           '#/definitions/ClaimEntry'
+        uniqueItems:    true
+      filters:
+        type:           array
+        items:
+          $ref:           '#/definitions/PluginConfig'
+      upstream:
+        type:               object
+        additionalProperties:
+          type:           string
+          x-type:         any
+
+  ClaimEntry:
+    required:
+      - type
+    properties:
+      type:
+        type:           string
+      value:
+        type:           string
+        x-type:         any
+
+  Service:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/ServiceUpdate'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - name ASCENDING
+    x-indexes:
+      - name:           service-by-name
+        unique:         true
+        fields:
+          - name ASCENDING
+
+  ServiceList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+        - items
+        properties:
+          items:
+            type:       array
+            items:
+              $ref:     '#/definitions/Service'
+
+  # TOKENS
+  Token:
+    allOf:
+      - $ref:             '#/definitions/Entity'
+      - type:             object
+        required:
+          - credentialId
+          - tokenType
+          - grantType
+          - issuedAt
+          - lifespan
+          - permissionIds
+          - claims
+          - extended
+        properties:
+          credentialId:
+            type:           string
+          scheme:
+            type:           string
+          tokenType:
+            type:           string
+          grantType:
+            type:           string
+          issuer:
+            type:           string
+          subject:
+            type:           string
+          audience:
+            type:           array
+            items:
+              type:         string
+            uniqueItems:    true
+          issuedAt:
+            type:           string
+            format:         date-time
+          expiry:
+            type:           integer
+            format:         int64
+          lifespan:
+            type:           string
+            enum:
+              - finite
+              - session
+            default:        finite
+          fromToken:
+            type:           string
+            x-storage:      encrypted
+          refreshToken:
+            type:           string
+            x-storage:      encrypted
+          permissionIds:
+            type:           array
+            items:
+              type:         string
+            uniqueItems:    true
+          claims:
+            type:           object
+            additionalProperties:
+              type:         string
+              x-type:     any
+          state:
+            type:           string
+          uri:
+            type:           string
+          extended:
+            type:           object
+            additionalProperties:
+              type:         string
+              x-type:       any
+          externalId:
+            type:           string
+    x-default-sort:
+      - id ASCENDING
+    x-indexes:
+      - name:           token-by-token
+        unique:         true
+        fields:
+          - token ASCENDING
+      - name:           token-by-refreshToken
+        unique:         true
+        sparse:         true
+        fields:
+          - refreshToken ASCENDING
+      - name:           token-by-externalId
+        unique:         true
+        sparse:         true
+        fields:
+          - externalId ASCENDING
+
+  TokenList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+          - items
+        properties:
+          items:
+            type:           array
+            items:
+              $ref:         '#/definitions/Token'
+
+  # USERS
+  UserUpdate:
+    required:
+      - userName
+      - firstName
+      - lastName
+    properties:
+      userName:
+        type:           string
+        x-storage:      case-insensitive
+      firstName:
+        type:           string
+        x-storage:      case-insensitive
+      lastName:
+        type:           string
+        x-storage:      case-insensitive
+      roleId:
+        type:           string
+      externalId:
+        type:           string
+
+  UserReadOnly:
+    required:
+      - administrator
+    properties:
+      administrator:
+        type:           boolean
+      role:
+        $ref:           '#/definitions/Role'
+
+  User:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/UserUpdate'
+      - $ref:           '#/definitions/UserReadOnly'
+      - $ref:           '#/definitions/Auditable'
+    x-default-sort:
+      - name ASCENDING
+    x-indexes:
+      - name:           user-by-userName
+        unique:         true
+        fields:
+          - userName ASCENDING
+
+  UserList:
+    allOf:
+      - $ref:           '#/definitions/PaginatedList'
+      - type:           object
+        required:
+        - items
+        properties:
+          items:
+            type:       array
+            items:
+              $ref:     '#/definitions/User'
+
+  Authentication:
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type:           string
+      password:
+        type:           string
+
+  SetPassword:
+    required:
+      - password
+    properties:
+      password:
+        type:           string
+
+  Result:
+    required:
+      - result
+    properties:
+      result:
+        type:           string
+
+  ConfigurableList:
+    required:
+      - items
+    properties:
+      items:
+        type:           array
+        items:
+          $ref:           '#/definitions/ConfigurableDescriptor'
+
+  ConfigurableDescriptor:
+    required:
+      - name
+    properties:
+      name:
+        type:           string
+      properties:
+        type:           array
+        items:
+          $ref:           '#/definitions/PropertyDescriptor'
+
+  PropertyDescriptor:
+    required:
+      - propertyName
+      - displayName
+      - propertyType
+      - required
+      - multi
+    properties:
+      propertyName:
+        type:           string
+      displayName:
+        type:           string
+      propertyType:
+        type:           string
+        enum:
+          - string
+          - integer
+          - decimal
+          - booleanV
+          - datetime
+      required:
+        type:           boolean
+      multi:
+        type:           boolean
+
+  UserPermissions:
+    required:
+      - name
+      - administrator
+      - permissions
+      - accessLevels
+      - usersLocked
+    properties:
+      name:
+        type:           string
+      administrator:
+        type:           boolean
+      permissions:
+        type:           array
+        items:
+          type:           string
+        uniqueItems:    true
+      accessLevels:
+        type:           object
+        additionalProperties:
+          type:           string
+      usersLocked:
+        type:           boolean
+
+  Summary:
+    required:
+      - name
+      - consumers
+      - developers
+      - services
+      - plans
+      - providers
+      - users
+      - roles
+    properties:
+      name:
+        type:           string
+      consumers:
+        type:           integer
+        format:         int64
+      developers:
+        type:           integer
+        format:         int64
+      services:
+        type:           integer
+        format:         int64
+      plans:
+        type:           integer
+        format:         int64
+      providers:
+        type:           integer
+        format:         int64
+      users:
+        type:           integer
+        format:         int64
+      roles:
+        type:           integer
+        format:         int64
+
+  CredentialUpdate:
+    type:           object
+    required:
+      - name
+      - enabled
+      - type
+      - subjectId
+      - subjectType
+    properties:
+      name:
+        type:           string
+      enabled:
+        type:           boolean
+        default:        true
+      type:
+        type:           string
+      subjectId:
+        type:           string
+      subjectType:
+        type:           string
+
+  Credential:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/Auditable'
+      - $ref:           '#/definitions/CredentialUpdate'
+
+  PluginConfig:
+    required:
+      - name
+      - properties
+    properties:
+      name:
+        type:           string
+      properties:
+        type:               object
+        additionalProperties:
+          type:           string
+          x-type:         any
+
+  Plugin:
+    allOf:
+      - $ref:           '#/definitions/Entity'
+      - $ref:           '#/definitions/PluginConfig'
+      - $ref:           '#/definitions/Auditable'
+
+  PluginList:
+    required:
+      - items
+    properties:
+      items:
+        type:           array
+        items:
+          $ref:           '#/definitions/Plugin'
+
+#
+# PARAMETERS
+#
+parameters:
+  offset:
+    name:           offset
+    in:             query
+    type:           integer
+    format:         int32
+    description:    The collection offset
+  limit:
+    name:           limit
+    in:             query
+    type:           integer
+    format:         int32
+    description:    The collection limit
+  environmentId:
+    name:           X-Environment-Id
+    in:             header
+    type:           string
+    description:    The environment identifier
+    x-global:       true
+  entityId:
+    name:           id
+    in:             path
+    type:           string
+    description:    The entity identifier
+    required:       true
+
+#
+# SECURITY DEFINITIONS
+#
+securityDefinitions:
+  basic:
+    type:           basic
+    description:    Authenticaiton for users via the administration console
+  apiKey:
+    type:           apiKey
+    description:    Authenticaiton for providers (e.g. services, oauth, portal, internal apps)
+    name:           X-Api-Key
+    in:             header
+
+#
+# SECURITY
+#
+security:
+  - basic: []
+  - apiKey: []
+
+#
+# TAGS
+tags:
+  - name:           applications
+    x-type:         resource
+  - name:           clients
+    x-type:         resource
+  - name:           developers
+    x-type:         resource
+  - name:           environments
+    x-type:         resource
+  - name:           logEntries
+    x-type:         resource
+  - name:           messages
+    x-type:         resource
+  - name:           permissions
+    x-type:         resource
+  - name:           plans
+    x-type:         resource
+  - name:           principalClaims
+    x-type:         resource
+  - name:           principalProfiles
+    x-type:         resource
+  - name:           providers
+    x-type:         resource
+  - name:           roles
+    x-type:         resource
+  - name:           services
+    x-type:         resource
+  - name:           tokens
+    x-type:         resource
+  - name:           users
+    x-type:         resource
+  - name:           modules
+    x-type:         resource
+  - name:           me
+    x-type:         resource
+
+externalDocs:
+  url:            http://www.prizem.io/docs

@@ -1,0 +1,190 @@
+notFound:
+  status:              404
+  errorCode:           CLIENT-001
+  message:             "Sorry. The resource you requested was not found."
+  developerMessage:    "The resource you requested was not found."
+notFound|1:
+  message:             "Sorry. The {entityName} you requested was not found."
+notFound|collection:
+  message:             "Sorry. The {entityName} you requested was not found."
+notFound|2:
+  message:             "Sorry. The {entityName} with ID {id} was not found."
+notFound|entity:
+  message:             "Sorry. The {entityName} with ID {id} was not found."
+
+missingParameter:
+  status:              400
+  errorCode:           CLIENT-002
+  message:             "Your request did not provide a required paramater."
+  developerMessage:    "Your request did not provide a required paramater."
+missingParameter|1:
+  message:             "{param} is a required paramater."
+  developerMessage:    "{param} is a required paramater."
+missingParameter|param:
+  message:             "{param} is a required paramater."
+  developerMessage:    "{param} is a required paramater."
+
+invalidParameter:
+  status:              400
+  errorCode:           CLIENT-003
+  message:             "Your request contained an invalid paramater."
+  developerMessage:    "Your request contained an invalid paramater."
+invalidParameter|1:
+  message:             "The provided value for {param} is invalid."
+  developerMessage:    "The provided value for {param} is invalid."
+
+methodNotAllowed:
+  status:              405
+  errorCode:           CLIENT-004
+  message:             The operation you performed is not allowed.
+  developerMessage:    You are requesting a resource method that is not allowed.
+
+mediaTypeNotSupported:
+  status:              415
+  errorCode:           CLIENT-005
+  message:             message
+  developerMessage:    message
+
+mediaTypeNotAcceptable:
+  status:              406
+  errorCode:           CLIENT-006
+  message:             message
+  developerMessage:    message
+
+badRequest:
+  status:              400
+  errorCode:           CLIENT-007
+  message:             message
+  developerMessage:    message
+
+typeMismatch:
+  status:              400
+  errorCode:           CLIENT-008
+  message:             message
+  developerMessage:    message
+
+messageNotReadable:
+  status:              400
+  errorCode:           CLIENT-009
+  message:             message
+  developerMessage:    message
+
+missingRequestPart:
+  status:              400
+  errorCode:           CLIENT-010
+  message:             message
+  developerMessage:    message
+
+bindingException:
+  status:              400
+  errorCode:           CLIENT-011
+  message:             message
+  developerMessage:    message
+
+forbidden:
+  status:              403
+  errorCode:           SECURITY-001
+  message:             "Access denied"
+  developerMessage:    "Your client is not authorized to make this request."
+
+invalidCredentials:
+  status:              401
+  errorCode:           SECURITY-002
+  message:             "Access denied"
+  developerMessage:    "Your request did not contain a valid credential."
+
+credentialDisabled:
+  status:              401
+  errorCode:           SECURITY-003
+  message:             "Access denied"
+  developerMessage:    "Your request did not contain a valid credential."
+
+invalidToken:
+  status:              401
+  errorCode:           SECURITY-004
+  message:             "Access denied"
+  developerMessage:    "Your request did not contain a valid token."
+
+tokenMalformed:
+  status:              401
+  errorCode:           SECURITY-004
+  message:             "Access denied"
+  developerMessage:    "Your request contained a malformed token."
+
+tokenNotYetActive:
+  status:              401
+  errorCode:           SECURITY-004
+  message:             "Access denied"
+  developerMessage:    "Your request contained a token that is not yet active."
+
+tokenExpired:
+  status:              401
+  errorCode:           SECURITY-004
+  message:             "Access denied"
+  developerMessage:    "Your request contained an expired token."
+
+notAuthenticated:
+  status:              401
+  errorCode:           SECURITY-004
+  message:             "Access denied"
+  developerMessage:    "The resource you are requesting requires an authenticated user."
+
+notAuthorized:
+  status:              401
+  errorCode:           SECURITY-005
+  message:             "Access denied"
+  developerMessage:    "Your client or access token does not has insufficient permissions."
+
+insufficientPermissions:
+  status:              401
+  errorCode:           SECURITY-006
+  message:             "Access denied"
+  developerMessage:    "Your client or access token does not has insufficient permissions."
+
+restrictedIpAddress:
+  status:              401
+  errorCode:           SECURITY-008
+  message:             "Access denied."
+  developerMessage:    "You are not permitted to access this resource."
+
+restrictedLocation:
+  status:              401
+  errorCode:           SECURITY-009
+  message:             "Access denied."
+  developerMessage:    "You are not permitted to access this resource."
+
+constraintViolation:
+  status:              409
+  errorCode:           CLIENT-011
+  message:             "{message}"
+  developerMessage:    "{developerMessage}"
+
+conflict:
+  status:              409
+  errorCode:           CLIENT-012
+  message:             "Conflict"
+  developerMessage:    "There was a conflict encountered in processing your request."
+
+internalError:
+  status:              500
+  errorCode:           SERVER-001
+  message:             message
+  developerMessage:    message
+
+serviceUnavailable:
+  status:              500
+  errorCode:           SERVER-002
+  message:             message
+  developerMessage:    message
+
+conversionNotSupported:
+  status:              500
+  errorCode:           SERVER-003
+  message:             message
+  developerMessage:    message
+
+messageNotWritable:
+  status:              500
+  errorCode:           SERVER-004
+  message:             message
+  developerMessage:    message

@@ -1,0 +1,25 @@
+services:
+  - name:                 helloWorld
+    type:                 external
+    description:          Service for creating customer references
+    hostnames:
+      - apache.org
+    uriPrefix:            null
+    versionLocation:      uri
+    defaultVersion:       v1
+    scheme:               http
+    contextRoot:          null
+    authenticationType:   none
+    operations:
+      - name:             sayHello
+        method:           GET
+        uriPattern:       /
+        filters:
+          - name: test
+    backend:
+      name: http
+plugins:
+  - id:   jwt1
+    name: jwt
+    properties:
+      message: JWT config

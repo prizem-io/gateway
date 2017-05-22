@@ -1,0 +1,20 @@
+gateway:
+  listen: ":9000"
+  config: etc/gateway-config.yaml
+
+oauth:
+  enabled: true
+
+redis:
+  addr: localhost:6379
+
+redisCluster:
+  addrs:
+    - localhost:6379
+
+filter:
+  jwt:
+    secretFile: etc/hmacKey
+
+nats:
+  url: nats://localhost:4222

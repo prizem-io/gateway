@@ -1,0 +1,26 @@
+package: github.com/prizem-io/gateway
+import:
+- package: github.com/Sirupsen/logrus
+  version: ~0.11.5
+- package: github.com/buaazp/fasthttprouter
+  version: ~0.1.1
+- package: github.com/ghodss/yaml
+  version: ~1.0.0
+- package: github.com/golang/gddo
+  subpackages:
+  - httputil/header
+- package: github.com/mitchellh/mapstructure
+- package: github.com/nats-io/nats
+  version: ~1.2.2
+- package: github.com/satori/go.uuid
+  version: ~1.1.0
+- package: github.com/spf13/viper
+- package: github.com/valyala/fasthttp
+  version: 9ffce8c687bb1f181032a667206d248058cd445a
+- package: gopkg.in/vmihailenco/msgpack.v2
+  version: ~2.9.1
+- package: gopkg.in/yaml.v2
+- package: github.com/go-redis/redis
+  version: v6.3.1
+- package: github.com/dgrijalva/jwt-go
+  version: v3.0.0

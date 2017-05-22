@@ -1,0 +1,17 @@
+{
+  "name": "prizem-gateway",
+  "description": "Lightweight and customizable API gateway",
+  "scripts": {
+    "build": "node codegen.js"
+  },
+  "license": "UNLICENSED",
+  "repository": {},
+  "dependencies": {
+    "inflection": "^1.8.0",
+    "lodash": "^3.10.1",
+    "oas-nodegen" : "git+https://github.com/capitalone/oas-nodegen.git#f729c30be9b608834a9564fcc304406804b075b3"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  }
+}

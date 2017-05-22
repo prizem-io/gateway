@@ -1,0 +1,100 @@
+package prizem
+
+import (
+{{#each imports}}	"{{.}}"
+{{/each}}
+{{#if enums}}
+	//"bytes"
+	"database/sql"
+	//"database/sql/driver"
+	//"encoding/csv"
+	"encoding/json"
+	//"errors"
+	"fmt"
+	//"strconv"
+	//"strings"
+{{/if}}
+)
+
+{{#each models}}
+{{#if description}}{{commentize description "// " width=100}}
+{{/if}}type {{name}} struct {
+{{#each references}}	{{name}} `msgpack:",inline" mapstructure:",squash"`
+{{/each}}
+{{#each vars}}{{#if description}}{{commentize description "	// " width=100}}
+{{/if}}	{{pad varname ../maxVarNameLength}} {{pad dataType ../maxTypeNameLength}} {{#if tagsString}}`{{tagsString}}`{{/if}}
+{{/each}}
+{{#each additionalFields}}
+	{{.}}
+{{/each}}
+}
+
+{{/each}}
+
+{{#each enums}}
+// {{name}} is an enum.
+// It is serialized as a string in JSON.
+type {{name}} string
+
+// {{name}} enum values.
+var (
+{{#each values}}
+	{{../name}}{{name}} {{../name}} = "{{value}}"
+{{/each}}
+
+	{{varName}}Map = map[string]int{
+		{{#each values}}
+		string({{../name}}{{name}}): {{number}},
+		{{/each}}
+	}
+
+	{{varName}}IntMap = map[int]string{
+		{{#each values}}
+		{{number}}: string({{../name}}{{name}}),
+		{{/each}}
+	}
+)
+
+// Int converts this to a nullable integer.
+func (s *{{name}}) Int() sql.NullInt64 {
+	ni := sql.NullInt64{}
+	if s == nil {
+		ni.Int64, ni.Valid = 0, false
+	} else {
+		num, _ := {{varName}}Map[string(*s)]
+		ni.Int64, ni.Valid = int64(num), true
+	}
+	return ni
+}
+
+// Known says whether or not this value is a known enum value.
+func (s *{{name}}) Known() bool {
+	if s == nil {
+		return false
+	}
+	_, ok := {{varName}}Map[string(*s)]
+	return ok
+}
+
+// UnmarshalJSON satisfies the json.Unmarshaler
+func (s *{{name}}) UnmarshalJSON(data []byte) error {
+	str := ""
+	err := json.Unmarshal(data, &str)
+	if err != nil {
+		return err
+	}
+	*s = {{name}}(str)
+	if !s.Known() {
+		return fmt.Errorf("Unknown {{name}} enum value: %s", s)
+	}
+	return nil
+}
+
+// String is for the standard stringer interface.
+func (s *{{name}}) String() string {
+	if s == nil {
+		return ""
+	}
+	return string(*s)
+}
+{{/each}}
