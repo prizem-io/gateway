@@ -57,7 +57,7 @@ func (a *JWTAuthenticator) Initialize(configuration config.Configuration) error 
 }
 
 func (a *JWTAuthenticator) DecodeConfig(input map[string]interface{}) (interface{}, error) {
-	config := jwtConfig{}
+	var config jwtConfig
 	err := mapstructure.Decode(input, &config)
 	if err != nil {
 		return nil, err
@@ -80,7 +80,7 @@ func (a *JWTAuthenticator) Authenticate(ctx context.Context, confuration interfa
 	}
 
 	var credential *oauth2.OAuth2Credential
-	claims := jwt.MapClaims{}
+	var claims jwt.MapClaims
 	token, err := jwt.ParseWithClaims(bearer, claims, func(token *jwt.Token) (interface{}, error) {
 		credentialID, ok := getClaimString(token.Header, "cid")
 		if !ok {

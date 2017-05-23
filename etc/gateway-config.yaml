@@ -16,6 +16,8 @@ services:
         uriPattern:       /
         filters:
           - name: test
+            properties:
+              foo: bar
     backend:
       name: http
 plugins:

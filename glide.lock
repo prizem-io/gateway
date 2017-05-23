@@ -1,5 +1,5 @@
 hash: 1a3e805993fbbfdeb4a7a955c7e04118a4ebfb5c6ca3427a69f9ddff2d222271
-updated: 2017-05-06T21:52:49.023351994-04:00
+updated: 2017-05-22T18:13:39.798538815-04:00
 imports:
 - name: github.com/buaazp/fasthttprouter
   version: ade4e2031af3aed7fffd241084aad80a58faf421
@@ -18,7 +18,7 @@ imports:
   - internal/pool
   - internal/proto
 - name: github.com/golang/gddo
-  version: cdd60fa89d3a1fe76aeb1b74054f6e2522dbdf69
+  version: fb30f6a1c88b84ee68c47ff27acea04cb1426333
   subpackages:
   - httputil/header
 - name: github.com/golang/protobuf

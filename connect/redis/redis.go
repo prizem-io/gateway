@@ -7,13 +7,13 @@ import (
 )
 
 func Connect(config config.Configuration) *redis.Client {
-	options := redis.Options{}
+	var options redis.Options
 	config.UnmarshalKey("redis", &options)
 	return redis.NewClient(&options)
 }
 
 func ConnectCluster(config config.Configuration) *redis.ClusterClient {
-	options := redis.ClusterOptions{}
+	var options redis.ClusterOptions
 	config.UnmarshalKey("redisCluster", &options)
 	return redis.NewClusterClient(&options)
 }

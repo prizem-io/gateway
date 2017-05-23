@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"time"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -17,9 +16,9 @@ import (
 	"github.com/prizem-io/gateway/backend/http"
 	"github.com/prizem-io/gateway/command"
 	"github.com/prizem-io/gateway/connect/redis"
-	"github.com/prizem-io/gateway/context"
 	ef "github.com/prizem-io/gateway/errorfactory"
 	"github.com/prizem-io/gateway/filter"
+	"github.com/prizem-io/gateway/filter/timer"
 	"github.com/prizem-io/gateway/identity/simple"
 	"github.com/prizem-io/gateway/oauth2"
 	"github.com/prizem-io/gateway/server"
@@ -83,7 +82,7 @@ func main() {
 	)
 
 	filter.Register(
-		&timerFilter{},
+		timer.New(),
 	)
 
 	backend.Register(
@@ -116,25 +115,4 @@ func main() {
 	go redis.CommandSubscribe(redisClient)
 
 	log.Fatal(fasthttp.ListenAndServe(viper.GetString("gateway.listen"), fasthttpserver.Serve))
-}
-
-type timerFilter struct{}
-
-func (*timerFilter) Name() string {
-	return "test"
-}
-
-func (*timerFilter) Priority() int {
-	return 0
-}
-
-func (*timerFilter) Evaluate(ctx context.Context, _ interface{}) error {
-	defer func(begin time.Time) {
-		log.Infof(
-			"%s::%s took %dms",
-			ctx.Service().Name,
-			ctx.Operation().Name,
-			time.Since(begin).Nanoseconds()/int64(time.Millisecond))
-	}(time.Now())
-	return ctx.Next()
 }

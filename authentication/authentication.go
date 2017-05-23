@@ -75,7 +75,7 @@ func Handler(ctx context.Context) error {
 	for _, authenticator := range authenticators {
 		name := authenticator.Name()
 
-		var config interface{} = nil
+		var config interface{}
 		configuration, err := ctx.GetPlugin(name)
 		if err == nil {
 			config = configuration.Config

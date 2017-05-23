@@ -143,10 +143,10 @@ func LoadGatewayConfig(configLocation string) *GatewayConfig {
 }
 
 func ProcessGatewayConfig(gatewayConfig *GatewayConfig) (*Gateway, error) {
-	gateway := Gateway{}
-
+	var gateway Gateway
 	operationCount := 0
 	gateway.Services = gatewayConfig.Services
+
 	for i := 0; i < len(gateway.Services); i++ {
 		service := &gateway.Services[i]
 		err := handleConfigurations(service.Filters)
