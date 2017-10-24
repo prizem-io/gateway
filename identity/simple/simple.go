@@ -24,7 +24,7 @@ func New(subject string) (identity.Identity, error) {
 	}, nil
 }
 
-func (i *SimpleIdentity) Id() string {
+func (i *SimpleIdentity) ID() string {
 	return i.id
 }
 

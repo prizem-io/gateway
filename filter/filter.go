@@ -123,7 +123,7 @@ func getFilterInvocations(ctx context.Context, filters []config.PluginConfig) (S
 		// Look it up
 		filter, ok := filterMap[configuration.Name]
 		if !ok {
-			return nil, ef.NewError(ctx, "unregisterdFilter", ef.Params{
+			return nil, ef.New(ctx, "unregisterdFilter", ef.Params{
 				"filter": configuration.Name,
 			})
 		}

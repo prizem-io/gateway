@@ -26,7 +26,7 @@ func getOAuthCredential(ctx context.Context, id string) (*oauth2.OAuth2Credentia
 
 	credential, ok := _credential.(*oauth2.OAuth2Credential)
 	if !ok {
-		return nil, ef.NewError(ctx, "invalidCredential")
+		return nil, ef.New(ctx, "invalidCredential")
 	}
 
 	return credential, nil

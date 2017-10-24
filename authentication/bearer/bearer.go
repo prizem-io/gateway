@@ -57,7 +57,7 @@ func (a *BearerAuthenticator) Authenticate(ctx context.Context, confuration inte
 
 	token, err := _tokener.Get(bearer)
 	if err != nil {
-		return nil, nil, ef.NewError(ctx, "invalidToken")
+		return nil, nil, ef.New(ctx, "invalidToken")
 	}
 
 	identity, err := _identifier(token.Subject)

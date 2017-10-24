@@ -18,7 +18,7 @@ import (
 	"github.com/prizem-io/gateway/connect/redis"
 	ef "github.com/prizem-io/gateway/errorfactory"
 	"github.com/prizem-io/gateway/filter"
-	"github.com/prizem-io/gateway/filter/timer"
+	"github.com/prizem-io/gateway/filter/logger"
 	"github.com/prizem-io/gateway/identity/simple"
 	"github.com/prizem-io/gateway/oauth2"
 	"github.com/prizem-io/gateway/server"
@@ -69,7 +69,7 @@ func main() {
 	jwt.Initialize(simple.New)
 
 	server.AddCredentialDecoders(
-		oauth2.NewOAuth2CredentialDecoder(),
+		oauth2.NewCredentialDecoder(),
 	)
 
 	server.AddConfigDecoders(
@@ -82,7 +82,7 @@ func main() {
 	)
 
 	filter.Register(
-		timer.New(),
+		logger.New(),
 	)
 
 	backend.Register(

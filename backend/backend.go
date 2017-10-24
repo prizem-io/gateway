@@ -52,7 +52,7 @@ func GetHandler(ctx context.Context, name *string) (Handler, error) {
 
 	backend, ok := backends[nameStr]
 	if !ok {
-		return nil, ef.NewError(ctx, "routerUnrecognized", ef.Params{
+		return nil, ef.New(ctx, "routerUnrecognized", ef.Params{
 			"name": nameStr,
 		})
 	}

@@ -15,9 +15,7 @@ services:
         method:           GET
         uriPattern:       /
         filters:
-          - name: test
-            properties:
-              foo: bar
+          - name: logger
     backend:
       name: http
 plugins:

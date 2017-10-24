@@ -50,7 +50,7 @@ func Handler(ctx context.Context) error {
 			permission, err := ctx.GetPermission(permissionID)
 			if err != nil {
 				return nil
-				/*ef.NewError(ctx, "unknownPermission", ef.Params{
+				/*ef.New(ctx, "unknownPermission", ef.Params{
 					"permissionId": permissionId,
 				})*/
 			}

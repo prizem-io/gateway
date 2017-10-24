@@ -19,5 +19,5 @@ filter:
 nats:
   url: nats://localhost:4222
 
-timer:
+logger:
   priority: 0

@@ -7,23 +7,23 @@ import (
 )
 
 type GrantSettings struct {
-	Enabled             bool                   `enabled`
-	AccessTokenTimeout  *uint64                `accessTokenTimeout`
-	RefreshTokenTimeout *uint64                `refreshTokenTimeout`
-	Lifespan            config.Lifespan        `lifespan`
-	TokenType           string                 `tokenType`
-	PermissionIds       []string               `permissionIds`
-	Extended            map[string]interface{} `extended`
+	Enabled             bool                   `mapstructure:"enabled"`
+	AccessTokenTimeout  *uint64                `mapstructure:"accessTokenTimeout"`
+	RefreshTokenTimeout *uint64                `mapstructure:"refreshTokenTimeout"`
+	Lifespan            config.Lifespan        `mapstructure:"lifespan"`
+	TokenType           string                 `mapstructure:"tokenType"`
+	PermissionIds       []string               `mapstructure:"permissionIds"`
+	Extended            map[string]interface{} `mapstructure:"extended"`
 }
 
 type OAuth2Credential struct {
 	config.Credential `mapstructure:",squash"`
-	ClientId          string                   `clientId`
-	ClientSecret      string                   `clientSecret`
-	GrantSettings     map[string]GrantSettings `grantSettings`
-	RedirectUri       *string                  `redirectUri`
-	PermissionIds     []string                 `permissionIds`
-	Extended          map[string]interface{}   `extended`
+	ClientID          string                   `mapstructure:"clientId"`
+	ClientSecret      string                   `mapstructure:"clientSecret"`
+	GrantSettings     map[string]GrantSettings `mapstructure:"grantSettings"`
+	RedirectURI       *string                  `mapstructure:"redirectUri"`
+	PermissionIds     []string                 `mapstructure:"permissionIds"`
+	Extended          map[string]interface{}   `mapstructure:"extended"`
 }
 
 type OAuthToken struct {
@@ -33,22 +33,22 @@ type OAuthToken struct {
 	ExpiresIn    uint64  `json:"expires_in"`
 }
 
-type OAuth2CredentialDecoder struct{}
+type CredentialDecoder struct{}
 
-func NewOAuth2CredentialDecoder() *OAuth2CredentialDecoder {
-	return &OAuth2CredentialDecoder{}
+func NewCredentialDecoder() *CredentialDecoder {
+	return &CredentialDecoder{}
 }
 
-func (d *OAuth2CredentialDecoder) Type() string {
+func (d *CredentialDecoder) Type() string {
 	return "oauth2"
 }
 
-func (d *OAuth2CredentialDecoder) DecodeCredential(input map[string]interface{}) (interface{}, string, error) {
-	credential := OAuth2Credential{}
+func (d *CredentialDecoder) DecodeCredential(input map[string]interface{}) (interface{}, string, error) {
+	var credential OAuth2Credential
 	err := mapstructure.Decode(input, &credential)
 	if err != nil {
 		return nil, "", err
 	}
 
-	return &credential, credential.ClientId, nil
+	return &credential, credential.ClientID, nil
 }

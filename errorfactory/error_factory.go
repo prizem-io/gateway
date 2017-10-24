@@ -120,7 +120,7 @@ func getForKey(key string) ErrorTemplateMap {
 	return errorTemplateMap
 }
 
-func NewError(locale Localized, reason string, params ...Params) *APIError {
+func New(locale Localized, reason string, params ...Params) *APIError {
 	errorTemplate := errorTemplate{}
 	errorTemplates := getErrorTemplateMap(locale)
 	found := commonTemplates(errorTemplates, &errorTemplate, &reason, params...)

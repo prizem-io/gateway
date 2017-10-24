@@ -94,11 +94,11 @@ func Handler(ctx context.Context) error {
 
 		//if ctx.SubjectType() != credential.SubjectType {
 		if credential.SubjectType != "consumer" {
-			return ef.NewError(ctx, "invalidCredential")
+			return ef.New(ctx, "invalidCredential")
 		}
 
 		if !credential.Enabled {
-			return ef.NewError(ctx, "credentialDisabled")
+			return ef.New(ctx, "credentialDisabled")
 		}
 
 		ctx.SetCredential(credential)
@@ -110,7 +110,7 @@ func Handler(ctx context.Context) error {
 		}
 
 		if consumer == nil {
-			return ef.NewError(ctx, "invalidCredential")
+			return ef.New(ctx, "invalidCredential")
 		}
 
 		ctx.SetConsumer(consumer)
@@ -130,11 +130,11 @@ func Handler(ctx context.Context) error {
 	authenticationType := ctx.Service().AuthenticationType
 
 	if authenticationType != config.AuthenticationTypeNone && ctx.Consumer() == nil {
-		return ef.NewError(ctx, "notAuthenticated")
+		return ef.New(ctx, "notAuthenticated")
 	}
 
 	if authenticationType == config.AuthenticationTypeThreeLegged && ctx.Identity() == nil {
-		return ef.NewError(ctx, "notAuthenticated")
+		return ef.New(ctx, "notAuthenticated")
 	}
 
 	return nil

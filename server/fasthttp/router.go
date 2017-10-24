@@ -121,7 +121,7 @@ func (o *operationRoute) handleRouter(frc *fasthttp.RequestCtx) {
 
 func notFound(frc *fasthttp.RequestCtx) {
 	ctx := AcquireFastHttpContext(frc, "consumer")
-	err := ef.NewError(ctx, "notFound")
+	err := ef.New(ctx, "notFound")
 	ctx.SetStatusCode(err.Status)
 	server.WriteEntity(ctx, err)
 	ctx.Reset()
@@ -130,7 +130,7 @@ func notFound(frc *fasthttp.RequestCtx) {
 
 func methodNotAllowed(frc *fasthttp.RequestCtx) {
 	ctx := AcquireFastHttpContext(frc, "consumer")
-	err := ef.NewError(ctx, "methodNotAllowed")
+	err := ef.New(ctx, "methodNotAllowed")
 	ctx.SetStatusCode(err.Status)
 	server.WriteEntity(ctx, err)
 	ctx.Reset()
@@ -140,7 +140,7 @@ func methodNotAllowed(frc *fasthttp.RequestCtx) {
 func internalError(frc *fasthttp.RequestCtx, rcv interface{}) {
 	log.Error(rcv)
 	ctx := AcquireFastHttpContext(frc, "consumer")
-	err := ef.NewError(ctx, "internalError")
+	err := ef.New(ctx, "internalError")
 	ctx.SetStatusCode(err.Status)
 	server.WriteEntity(ctx, err)
 	ctx.Reset()

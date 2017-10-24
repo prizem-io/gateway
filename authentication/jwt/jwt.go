@@ -109,13 +109,13 @@ func (a *JWTAuthenticator) Authenticate(ctx context.Context, confuration interfa
 		return &credential.Credential, identity, nil
 	} else if ve, ok := err.(*jwt.ValidationError); ok {
 		if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-			return nil, nil, ef.NewError(ctx, "tokenMalformed")
+			return nil, nil, ef.New(ctx, "tokenMalformed")
 		} else if ve.Errors&(jwt.ValidationErrorExpired) != 0 {
-			return nil, nil, ef.NewError(ctx, "tokenExpired")
+			return nil, nil, ef.New(ctx, "tokenExpired")
 		} else if ve.Errors&(jwt.ValidationErrorExpired) != 0 {
-			return nil, nil, ef.NewError(ctx, "tokenNotYetActive")
+			return nil, nil, ef.New(ctx, "tokenNotYetActive")
 		}
-		return nil, nil, ef.NewError(ctx, "invalidCredential")
+		return nil, nil, ef.New(ctx, "invalidCredential")
 	} else {
 		return nil, nil, err
 	}

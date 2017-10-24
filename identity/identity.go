@@ -4,7 +4,7 @@ type (
 	Claims map[string]interface{}
 
 	Identity interface {
-		Id() string
+		ID() string
 		Name() string
 		Context() *string
 		PermissionIDs() []string
